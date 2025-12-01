@@ -5,7 +5,6 @@
   <title>Ryan Thorley | Operator and Problem Solver</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Meta for share previews -->
   <meta name="description" content="Hands on operator with experience across operations, marketing, data and technical delivery. I help founders and teams bring clarity and structure to fast moving businesses.">
   <meta property="og:title" content="Ryan Thorley">
   <meta property="og:description" content="Operator, problem solver and builder of things that actually work.">
@@ -726,6 +725,7 @@
             <strong>National Diploma Level 1, Graphic Design</strong><br>
             NCN City Adams, Nottingham
           </p>
+
           <p class="body-copy" style="margin-top: 12px;">
             <strong>Certifications</strong><br>
             Google Fundamentals of Digital Marketing<br>
@@ -780,9 +780,21 @@
     </section>
 
     <p class="footer-note">
+      Visitors: <span id="visitor-count">...</span><br>
       This page is my live CV. The most recent roles and projects will always appear here first.
     </p>
   </main>
+
+  <script>
+    fetch('https://api.counterapi.dev/v1/ryanthorley/cv/visits')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var el = document.getElementById('visitor-count');
+        if (el && typeof d.count !== 'undefined') {
+          el.textContent = d.count;
+        }
+      })
+      .catch(function () {});
+  </script>
 </body>
 </html>
-
