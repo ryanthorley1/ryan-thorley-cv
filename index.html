@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ryan Thorley | Operator and Problem Solver</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-alt: #ffffff;
+      --text-main: #111111;
+      --text-muted: #555555;
+      --border-subtle: #e5e5ea;
+      --accent: #111111;
+      --card-bg: #ffffff;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
+      --radius-page: 26px;
+      --radius-card: 18px;
+      --max-width: 960px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0, #f5f5f7 48%, #ebedf0 100%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      padding: 16px;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 32px;
+      }
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto 64px auto;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: var(--radius-page);
+      padding: 24px 20px 32px 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(18px);
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 40px 44px 48px 44px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .page {
+        padding: 48px 56px 56px 56px;
+      }
+    }
+
+    /* Hero */
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+    }
+
+    @media (min-width: 850px) {
+      .hero {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 32px;
+      }
+    }
+
+    .hero-main {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .name {
+      font-family: "Sora", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.1rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 26rem;
+    }
+
+    .hero-summary {
+      font-size: 0.98rem;
+      color: #1e1e1f;
+      max-width: 34rem;
+    }
+
+    .hero-contact {
+      margin-top: 4px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .hero-contact a {
+      color: var(--text-main);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+      padding-bottom: 1px;
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    @media (min-width: 850px) {
+      .hero-side {
+        align-items: flex-end;
+        margin-top: 0;
+      }
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      font-size: 0.9rem;
+      padding: 10px 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        transform 0.08s ease,
+        box-shadow 0.14s ease,
+        border-color 0.14s ease,
+        color 0.14s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.26);
+    }
+
+    .btn-ghost {
+      background: rgba(246, 246, 248, 0.9);
+      color: var(--text-main);
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-ghost:hover {
+      background: #f0f0f3;
+      border-color: var(--accent);
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: left;
+    }
+
+    @media (min-width: 850px) {
+      .small-note {
+        text-align: right;
+      }
+    }
+
+    /* Sections */
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-family: "Sora", system-ui, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      max-width: 34rem;
+    }
+
+    /* Snapshot pills */
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #f2f2f4;
+      font-size: 0.82rem;
+      color: #333333;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    /* Two column layout */
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 820px) {
+      .two-column {
+        grid-template-columns: 1.15fr 1fr;
+        gap: 28px;
+      }
+    }
+
+    .section-heading-small {
+      font-family: "Sora", system-ui, sans-serif;
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    .body-copy {
+      font-size: 0.9rem;
+      color: #202022;
+    }
+
+    /* Lists */
+
+    .list-simple {
+      list-style: disc inside;
+      margin-top: 2px;
+      padding-left: 0;
+      font-size: 0.88rem;
+      color: #202022;
+    }
+
+    .list-simple li {
+      margin-bottom: 4px;
+    }
+
+    /* Experience */
+
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .experience-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      padding: 14px 14px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (min-width: 720px) {
+      .experience-card {
+        padding: 18px 18px;
+      }
+    }
+
+    .exp-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 4px 10px;
+      margin-bottom: 4px;
+    }
+
+    .exp-role {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .exp-company {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .exp-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    .exp-body {
+      font-size: 0.88rem;
+      margin-top: 6px;
+      color: #202022;
+    }
+
+    .exp-bullets {
+      margin-top: 6px;
+      padding-left: 1.1rem;
+      font-size: 0.88rem;
+    }
+
+    .exp-bullets li {
+      margin-bottom: 3px;
+    }
+
+    /* Footer note */
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* Small phones */
+    @media (max-width: 360px) {
+      body {
+        padding: 10px;
+      }
+
+      .page {
+        padding: 18px 14px 24px 14px;
+        border-radius: 20px;
+      }
+
+      .hero-summary {
+        font-size: 0.9rem;
+      }
+
+      .experience-card {
+        padding: 14px 12px;
+      }
+    }
+
+    /* Large desktop screens */
+    @media (min-width: 1400px) {
+      .page {
+        max-width: 1040px;
+      }
+
+      .name {
+        font-size: 3.1rem;
+      }
+
+      .hero-summary {
+        font-size: 1.02rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-main">
+        <div>
+          <h1 class="name">Ryan Thorley</h1>
+          <p class="tagline">Operator, problem solver and builder of things that actually work</p>
+        </div>
+        <p class="hero-summary">
+          I work with founders and teams who want less noise and more clarity. My background blends operations, marketing, data and technical delivery. I help businesses run smoother, deliver better work and make decisions based on reality rather than guesswork.
+        </p>
+        <p class="hero-contact">
+          Newark, Nottinghamshire<br>
+          <a href="tel:+447931676014">07 93 16 76 014</a> ·
+          <a href="mailto:ryan.thorley@outlook.com">ryan.thorley@outlook.com</a>
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <div class="btn-row">
+          <a href="mailto:ryan.thorley@outlook.com" class="btn-primary">Work with me</a>
+          <a href="#" class="btn-ghost">Download CV</a>
+        </div>
+        <p class="small-note">
+          Open to senior operations, hybrid and founder support roles.
+        </p>
+      </div>
+    </header>
+
+    <!-- SNAPSHOT -->
+    <section>
+      <h2 class="section-title">Snapshot</h2>
+      <p class="section-subtitle">
+        A clear view of who I am and what I bring into a team.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Ten plus years in marketing, data and operations</span>
+        <span class="pill">Built and led teams in fast paced environments</span>
+        <span class="pill">Experience across direct marketing, content and acquisition</span>
+        <span class="pill">Comfortable in founder led and early stage businesses</span>
+      </div>
+    </section>
+
+    <!-- WHAT I DO + SKILLS -->
+    <section class="two-column">
+      <div>
+        <h2 class="section-title">What I do</h2>
+        <p class="section-subtitle">
+          I sit in the space between strategy and execution. I solve problems, build structure and keep things moving.
+        </p>
+
+        <h3 class="section-heading-small">Operations and delivery</h3>
+        <p class="body-copy">
+          I design and improve the way work moves through a business. Planning, workflow, ownership and communication. I remove confusion and bottlenecks so teams can deliver without constant fire fighting.
+        </p>
+
+        <h3 class="section-heading-small">Growth and marketing</h3>
+        <p class="body-copy">
+          I have run digital campaigns, managed budgets and led teams that are responsible for demand and revenue. I understand paid media, data, content and the reality of turning attention into customers.
+        </p>
+
+        <h3 class="section-heading-small">Systems and data</h3>
+        <p class="body-copy">
+          I have built and managed lead systems, reporting setups and data flows. I like things that are accurate, simple and reliable so that better decisions can be made with less noise.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="section-title">Core skills</h2>
+        <ul class="list-simple">
+          <li>Operational leadership and problem solving</li>
+          <li>Digital marketing and growth</li>
+          <li>Data systems and lead infrastructure</li>
+          <li>Process design and improvement</li>
+          <li>Team management and communication</li>
+          <li>Client delivery and project ownership</li>
+          <li>Technical understanding of systems and automation</li>
+        </ul>
+
+        <h2 class="section-title" style="margin-top: 16px;">Technical</h2>
+        <ul class="list-simple">
+          <li>Data planning and management</li>
+          <li>Reporting and analysis</li>
+          <li>Excel and Office 365</li>
+          <li>Facebook Ads</li>
+          <li>Operational systems</li>
+          <li>Lead generation pipelines</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section>
+      <h2 class="section-title">Experience</h2>
+      <div class="experience-list">
+        <!-- Solved Media -->
+        <article class="experience-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Contractor</div>
+              <div class="exp-company">Solved Media</div>
+            </div>
+            <div class="exp-meta">Apr 2024 to Present · Remote</div>
+          </div>
+          <div class="exp-body">
+            Ongoing consultancy and project work across marketing, operations and digital production. I support clients with strategy, system setup, workflow improvement and delivery.
+          </div>
+        </article>
+
+        <!-- PodFirst -->
+        <article class="experience-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Director</div>
+              <div class="exp-company">PodFirst</div>
+            </div>
+            <div class="exp-meta">Apr 2025 to Nov 2025 · Nottingham</div>
+          </div>
+          <div class="exp-body">
+            Leadership role covering operations, production workflow, client delivery and team structure.
+            <ul class="exp-bullets">
+              <li>Improved internal processes and client delivery.</li>
+              <li>Managed scheduling, studio workflow and production output.</li>
+              <li>Supported the team through a high pressure period of rapid change.</li>
+              <li>Introduced clearer structure across several parts of the business.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- EnabledAgency.ai -->
+        <article class="experience-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Director</div>
+              <div class="exp-company">EnabledAgency.ai</div>
+            </div>
+            <div class="exp-meta">Apr 2025 to Nov 2025 · Nottingham</div>
+          </div>
+          <div class="exp-body">
+            Worked across operational setup, delivery pipelines and AI assisted workflows.
+            <ul class="exp-bullets">
+              <li>Supported technical workflows and client onboarding.</li>
+              <li>Improved how work moved between internal teams.</li>
+              <li>Identified gaps in delivery and created simple fixes.</li>
+              <li>Helped stabilise processes during a complex development period.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Solved Digital MD -->
+        <article class="experience-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Managing Director</div>
+              <div class="exp-company">Solved Digital</div>
+            </div>
+            <div class="exp-meta">Nov 2022 to Apr 2024 · Worksop</div>
+          </div>
+          <div class="exp-body">
+            Led the full business across marketing, operations and commercial output.
+            <ul class="exp-bullets">
+              <li>Oversaw digital advertising, data systems and reporting.</li>
+              <li>Managed supplier relationships and commercial decisions.</li>
+              <li>Built clearer processes across marketing delivery.</li>
+              <li>Improved performance tracking and data accuracy.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Solved Digital Ops -->
+        <article class="experience-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Operations Director</div>
+              <div class="exp-company">Solved Digital</div>
+            </div>
+            <div class="exp-meta">Sep 2021 to Nov 2022 · Nottingham</div>
+          </div>
+          <div class="exp-body">
+            Responsible for operations, data handling, reporting and process improvement.
+            <ul class="exp-bullets">
+              <li>Ensured the full production pipeline ran smoothly.</li>
+              <li>Improved reporting accuracy and internal communication.</li>
+              <li>Managed operational staff and workload planning.</li>
+              <li>Modernised several internal systems.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Earlier career -->
+        <article class="experience-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Earlier roles</div>
+              <div class="exp-company">Technical and operational positions</div>
+            </div>
+          </div>
+          <div class="exp-body">
+            Technical Director, Interrog8 Limited<br>
+            Technical Director, TPMN Ltd<br>
+            Technical Director, Communication Avenue Ltd<br>
+            Systems Engineer, Auto Coding Systems and Claricom<br>
+            Store Manager, Subway<br>
+            Apprentice Bricklayer, Clarke and Wright
+            <p style="margin-top: 6px;">
+              These roles gave me experience in production environments, consumer data, team management and technical delivery. They are also where I learned to deal with pressure, deadlines and real world consequences.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EDUCATION / HOW I WORK -->
+    <section class="two-column">
+      <div>
+        <h2 class="section-title">Education and certifications</h2>
+        <p class="body-copy">
+          <strong>National Diploma Level 1, Graphic Design</strong><br>
+          NCN City Adams, Nottingham
+        </p>
+        <p class="body-copy" style="margin-top: 8px;">
+          <strong>GCSEs A to D</strong><br>
+          Holgate Comprehensive School, Hucknall
+        </p>
+        <p class="body-copy" style="margin-top: 12px;">
+          <strong>Certifications</strong><br>
+          Google Fundamentals of Digital Marketing<br>
+          IDM Certificate in GDPR
+        </p>
+
+        <h2 class="section-title" style="margin-top: 18px;">Interests</h2>
+        <p class="body-copy">
+          Family, learning, football, music, films, DIY and karting.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="section-title">How I work</h2>
+        <ul class="list-simple">
+          <li>I prefer clear ownership and simple communication.</li>
+          <li>I care about delivery and the people doing the work.</li>
+          <li>I am comfortable in messy situations and early stage environments.</li>
+          <li>I like to understand how things actually work.</li>
+          <li>I say what I see in a respectful way without drama.</li>
+        </ul>
+
+        <h2 class="section-title" style="margin-top: 18px;">What I am looking for</h2>
+        <p class="body-copy" style="margin-bottom: 6px;">
+          I am open to roles and projects where I can bring real world experience into a team that wants to grow in a stable and sustainable way.
+        </p>
+        <ul class="list-simple">
+          <li>Head of Operations or Operations Manager.</li>
+          <li>Hybrid roles across delivery, marketing and systems.</li>
+          <li>Founder support and operational partner roles.</li>
+          <li>Short term projects that need stabilising and structure.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section>
+      <h2 class="section-title">Contact</h2>
+      <p class="body-copy">
+        If you would like to talk about working together, send me a message.
+      </p>
+      <p class="body-copy" style="margin-top: 8px;">
+        Email: <a href="mailto:ryan.thorley@outlook.com">ryan.thorley@outlook.com</a><br>
+        Location: Newark, Nottinghamshire
+      </p>
+      <div style="margin-top: 12px;">
+        <a href="mailto:ryan.thorley@outlook.com" class="btn-primary">Email me</a>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      This page is my live CV. The most recent roles and projects will always appear here first.
+    </p>
+  </main>
+</body>
+</html>
